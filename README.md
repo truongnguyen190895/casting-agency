@@ -109,7 +109,8 @@ The API will return three error types when requests fail:
   - Returns a list of actor objects, success value, and total number of actors
 - Sample: `curl http://127.0.0.1:5000/actors`
 
-```{
+```
+{
   "movies": [
     {
       "age": 48,
