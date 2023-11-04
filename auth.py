@@ -135,7 +135,7 @@ def requires_auth(permission=""):
                 check_permissions(permission, payload)
 
                 # If the permissions check passes, call the decorated function
-                return f(payload, *args, **kwargs)
+                return f(*args, **kwargs)
 
             except AuthError as e:
                 # Handle AuthError exceptions

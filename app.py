@@ -28,7 +28,7 @@ def create_app(test_config=None):
         return greeting
 
     @app.route("/actors", methods=["GET"])
-    # @requires_auth("get:actors")
+    @requires_auth("get:actors")
     def get_actors():
         actors = Actor.query.all()
         formatted_actors = [actor.format() for actor in actors]
@@ -41,7 +41,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/movies", methods=["GET"])
-    # @requires_auth("get:movies")
+    @requires_auth("get:movies")
     def get_movies():
         movies = Movie.query.all()
         formatted_movies = [movie.format() for movie in movies]
