@@ -9,9 +9,37 @@ All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps
 ### Pre-requisites and Local Development 
 Developers using this project should already have Python3, pip and node installed on their local machines.
 
+#### Virtual Environments
+
+Installing virtualenv
+
+For Unix/MacOS, run the following command:
+```
+python3 -m pip install --user virtualenv
+```
+
+For Windows:
+```
+py -m pip install --user virtualenv
+```
+
+Creating a virtual environment
+
+To create a virtual environment, go to your project’s directory and run venv.
+
+For Unix/MacOS, run the following command:
+```
+python3 -m venv env
+```
+
+For Windows:
+```
+py -m venv env
+```
+
 #### Backend
 
-From the backend folder run `pip install requirements.txt`. All required packages are included in the requirements file. 
+From the root directory run `pip install requirements.txt`. All required packages are included in the requirements file. 
 
 To run the application run the following commands: 
 ```
