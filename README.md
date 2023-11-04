@@ -88,9 +88,9 @@ Errors are returned as JSON objects in the following format:
 
 ```
 {
-    "success": False,
-    "error": 400,
-    "message": "bad request"
+  "success": False,
+  "error": 400,
+  "message": "bad request"
 }
 ```
 
@@ -110,7 +110,7 @@ The API will return three error types when requests fail:
 - Sample: `curl http://127.0.0.1:5000/actors`
 
 ```{
-  "books": [
+  "movies": [
     {
       "age": 48,
       "gender": "female",
@@ -118,100 +118,105 @@ The API will return three error types when requests fail:
       "name": "Angelina Jolie"
     },
   ],
-"success": true,
-"total_books": 1
-}
-```
-
-#### POST /books
-
-- General:
-  - Creates a new book using the submitted title, author and rating. Returns the id of the created book, success value, total books, and book list based on current page number to update the frontend.
-- `curl http://127.0.0.1:5000/books?page=3 -X POST -H "Content-Type: application/json" -d '{"title":"Neverwhere", "author":"Neil Gaiman", "rating":"5"}'`
-
-```
-{
-  "books": [
-    {
-      "author": "Neil Gaiman",
-      "id": 24,
-      "rating": 5,
-      "title": "Neverwhere"
-    }
-  ],
-  "created": 24,
   "success": true,
-  "total_books": 17
+  "total": 1
 }
 ```
 
-#### DELETE /books/{book_id}
+#### POST /actors
 
 - General:
-  - Deletes the book of the given ID if it exists. Returns the id of the deleted book, success value, total books, and book list based on current page number to update the frontend.
-- `curl -X DELETE http://127.0.0.1:5000/books/16?page=2`
+  - Creates a new actor using the submitted name, age and gender. Returns the id of the created actor, success value.
+- `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{"name":"Angelina Jolie", "age":48, "gender":"female"}'`
 
 ```
 {
-  "books": [
-    {
-      "author": "Gina Apostol",
-      "id": 9,
-      "rating": 5,
-      "title": "Insurrecto: A Novel"
-    },
-    {
-      "author": "Tayari Jones",
-      "id": 10,
-      "rating": 5,
-      "title": "An American Marriage"
-    },
-    {
-      "author": "Jordan B. Peterson",
-      "id": 11,
-      "rating": 5,
-      "title": "12 Rules for Life: An Antidote to Chaos"
-    },
-    {
-      "author": "Kiese Laymon",
-      "id": 12,
-      "rating": 1,
-      "title": "Heavy: An American Memoir"
-    },
-    {
-      "author": "Emily Giffin",
-      "id": 13,
-      "rating": 4,
-      "title": "All We Ever Wanted"
-    },
-    {
-      "author": "Jose Andres",
-      "id": 14,
-      "rating": 4,
-      "title": "We Fed an Island"
-    },
-    {
-      "author": "Rachel Kushner",
-      "id": 15,
-      "rating": 1,
-      "title": "The Mars Room"
-    }
-  ],
-  "deleted": 16,
   "success": true,
-  "total_books": 15
+  "created_actor_id": 1,
 }
 ```
 
-#### PATCH /books/{book_id}
+#### DELETE /actors/{actor_id}
 
 - General:
-  - If provided, updates the rating of the specified book. Returns the success value and id of the modified book.
-- `curl http://127.0.0.1:5000/books/15 -X PATCH -H "Content-Type: application/json" -d '{"rating":"1"}'`
+  - Deletes the actor of the given ID if exists. Returns the id of the deleted actor and success value.
+- `curl -X DELETE http://127.0.0.1:5000/actors/1`
 
 ```
 {
-  "id": 15,
+  "success": true,
+  "deleted_actor_id": 1,
+}
+```
+
+#### PATCH /actors/{actor_id}
+
+- General:
+  - Updates the information of the specified actor. Returns the success value and id of the modified actor.
+- `curl http://127.0.0.1:5000/books/15 -X PATCH -H "Content-Type: application/json" -d '{"name":"Maria"}'`
+
+```
+{
+  "updated_actor_id": 1,
+  "success": true
+}
+```
+
+#### GET /movies
+
+- General:
+  - Returns a list of movie objects, success value, and total number of movies
+- Sample: `curl http://127.0.0.1:5000/movies`
+
+```
+{
+  "movies": [
+    {
+      "id": 1,
+      "release_date": "2023-11-04",
+      "title": "Avengers"
+    },
+  ],
+  "success": true,
+  "total_books": 1
+}
+```
+
+#### POST /movies
+
+- General:
+  - Creates a new movie using the submitted title, and release date. Returns the id of the created movie, success value.
+- `curl http://127.0.0.1:5000/movies -X POST -H "Content-Type: application/json" -d '{"title":"Angelina Jolie", "release_date":"2023-11-11"}'`
+
+```
+{
+  "success": true,
+  "created_movie_id": 1,
+}
+```
+
+#### DELETE /movies/{movie_id}
+
+- General:
+  - Deletes the movie of the given ID if exists. Returns the id of the deleted movie and success value.
+- `curl -X DELETE http://127.0.0.1:5000/movies/1`
+
+```
+{
+  "success": true,
+  "deleted_movie_id": 1,
+}
+```
+
+#### PATCH /movies/{movie_id}
+
+- General:
+  - Updates the information of the specified movie. Returns the success value and id of the modified movie.
+- `curl http://127.0.0.1:5000/books/15 -X PATCH -H "Content-Type: application/json" -d '{"title":"Maria"}'`
+
+```
+{
+  "updated_movie_id": 1,
   "success": true
 }
 ```
@@ -220,8 +225,4 @@ The API will return three error types when requests fail:
 
 ## Authors
 
-Yours truly, Coach Caryn
-
-## Acknowledgements
-
-The awesome team at Udacity and all of the students, soon to be full stack extraordinaires!
+Yours truly, Truong Nguyen from FPT Software

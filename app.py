@@ -41,7 +41,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/movies", methods=["GET"])
-    @requires_auth("get:movies")
+    # @requires_auth("get:movies")
     def get_movies():
         movies = Movie.query.all()
         formatted_movies = [movie.format() for movie in movies]
@@ -49,6 +49,7 @@ def create_app(test_config=None):
             {
                 "success": True,
                 "movies": formatted_movies,
+                "total": len(formatted_movies)
             }
         )
 
