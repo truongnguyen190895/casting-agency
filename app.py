@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify, request
 from models import setup_db, Actor, Movie
 from flask_cors import CORS
+from auth import requires_auth
 
 
 def create_app(test_config=None):
@@ -27,6 +28,7 @@ def create_app(test_config=None):
         return greeting
 
     @app.route("/actors", methods=["GET"])
+    @requires_auth("get:actors")
     def get_actors():
         actors = Actor.query.all()
         formatted_actors = [actor.format() for actor in actors]
@@ -38,6 +40,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/movies", methods=["GET"])
+    @requires_auth("get:movies")
     def get_movies():
         movies = Movie.query.all()
         formatted_movies = [movie.format() for movie in movies]
@@ -49,6 +52,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/actors/<int:actor_id>", methods=["DELETE"])
+    @requires_auth("delete:actors")
     def delete_actor(actor_id):
         actor = Actor.query.get(actor_id)
         if actor is None:
@@ -71,6 +75,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/movies/<int:movie_id>", methods=["DELETE"])
+    @requires_auth("delete:movies")
     def delete_movie(movie_id):
         movie = Movie.query.get(movie_id)
         if movie is None:
@@ -93,6 +98,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/actors", methods=["POST"])
+    @requires_auth("post:actors")
     def create_actor():
         data = request.get_json()
 
@@ -122,6 +128,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/movies", methods=["POST"])
+    @requires_auth("post:movies")
     def create_movie():
         data = request.get_json()
 
@@ -150,6 +157,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/actors/<int:actor_id>", methods=["PATCH"])
+    @requires_auth("patch:actors")
     def update_actor(actor_id):
         actor = Actor.query.get(actor_id)
         if actor is None:
@@ -184,6 +192,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/movies/<int:movie_id>", methods=["PATCH"])
+    @requires_auth("patch:movies")
     def update_movie(movie_id):
         movie = Movie.query.get(movie_id)
         if movie is None:
@@ -212,6 +221,36 @@ def create_app(test_config=None):
                 "success": True,
                 "updated_movie_id": movie.id,
             }
+        )
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return (
+            jsonify({"success": False, "error": 404, "message": "Resource Not Found"}),
+            404,
+        )
+
+    @app.errorhandler(422)
+    def unprocessable_entity(error):
+        return (
+            jsonify(
+                {"success": False, "error": 422, "message": "Unprocessable Content"}
+            ),
+            422,
+        )
+
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        return (
+            jsonify({"success": False, "error": 405, "message": "Method Not Allowed"}),
+            405,
+        )
+
+    @app.errorhandler(400)
+    def method_not_allowed(error):
+        return (
+            jsonify({"success": False, "error": 400, "message": "Bad Request"}),
+            400,
         )
 
     return app
