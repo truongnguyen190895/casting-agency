@@ -22,10 +22,8 @@ def create_app(test_config=None):
 
     @app.route("/")
     def get_greeting():
-        excited = os.environ["EXCITED"]
-        greeting = "Hello"
-        if excited == "true":
-            greeting = greeting + "!!!!! You are doing great in this Udacity project."
+        greeting = "Hello !!!!! You are doing great in this Udacity project."
+
         return greeting
 
     @app.route("/actors", methods=["GET"])
@@ -148,6 +146,71 @@ def create_app(test_config=None):
             {
                 "success": True,
                 "created_movie_id": movie.id,
+            }
+        )
+
+    @app.route("/actors/<int:actor_id>", methods=["PATCH"])
+    def update_actor(actor_id):
+        actor = Actor.query.get(actor_id)
+        if actor is None:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Actor not found",
+                    }
+                ),
+                404,
+            )
+
+        data = request.get_json()
+
+        if "name" in data:
+            actor.name = data["name"]
+
+        if "age" in data:
+            actor.age = data["age"]
+
+        if "gender" in data:
+            actor.gender = data["gender"]
+
+        actor.update()
+
+        return jsonify(
+            {
+                "success": True,
+                "updated_actor_id": actor.id,
+            }
+        )
+
+    @app.route("/movies/<int:movie_id>", methods=["PATCH"])
+    def update_movie(movie_id):
+        movie = Movie.query.get(movie_id)
+        if movie is None:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "error": "Movie not found",
+                    }
+                ),
+                404,
+            )
+
+        data = request.get_json()
+
+        if "title" in data:
+            movie.title = data["title"]
+
+        if "release_date" in data:
+            movie.release_date = data["release_date"]
+
+        movie.update()
+
+        return jsonify(
+            {
+                "success": True,
+                "updated_movie_id": movie.id,
             }
         )
 
