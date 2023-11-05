@@ -4,14 +4,14 @@ from models import setup_db
 from flask_sqlalchemy import SQLAlchemy
 import unittest
 import json
-from settings import DATABASE_URL_TEST
+import os
 
 class TestApp(unittest.TestCase):
     def setUp(self):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_path = DATABASE_URL_TEST
+        self.database_path = os.environ['DATABASE_URL_TEST']
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context

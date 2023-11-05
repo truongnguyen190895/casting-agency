@@ -5,14 +5,17 @@ from jose import jwt
 from urllib.request import urlopen
 from jose.backends import RSAKey
 from jose.exceptions import JWTClaimsError, ExpiredSignatureError
-from settings import AUTH0_DOMAIN, ALGORITHMS, API_AUDIENCE
+import os
+# from settings import AUTH0_DOMAIN, ALGORITHMS, API_AUDIENCE
 
 ## AuthError Exception
 """
 AuthError Exception
 A standardized way to communicate auth failure modes
 """
-
+AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
+ALGORITHMS = os.environ["ALGORITHMS"]
+API_AUDIENCE = os.environ["API_AUDIENCE"]
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
