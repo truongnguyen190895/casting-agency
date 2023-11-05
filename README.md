@@ -63,6 +63,7 @@ From the root directory run `pip install requirements.txt`. All required package
 To run the application run the following commands:
 
 ```
+setup.bat
 python app.py
 ```
 
@@ -222,7 +223,9 @@ The API will return three error types when requests fail:
 }
 ```
 
-## Deployment N/A
+## Authentication
+
+All Auth0 configuration settings are located in setup.bat file.
 
 ## Authors
 
