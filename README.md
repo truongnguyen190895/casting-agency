@@ -227,6 +227,10 @@ The API will return three error types when requests fail:
 
 All Auth0 configuration settings are located in setup.bat file.
 
+## Deployment
+
+App is deployed to Render service and is now live at: https://casting-agency-deployment-4z18.onrender.com
+
 ## Authors
 
 Yours truly, Truong Nguyen from FPT Software
